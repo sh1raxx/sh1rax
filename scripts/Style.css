@@ -82,25 +82,18 @@ body, html {
 .main-content {
   max-width: 1200px;
   margin: 2rem auto;
-  margin-bottom: 5rem;
+  padding: 0 1rem;
+  /* extra space so fixed footer never covers content */
+  padding-bottom: 90px;
 }
 
 /* Tab content visibility */
 .tab-container {
   position: relative;
-  min-height: 400px;
-  padding-bottom: 80px;
 }
 
 .tab-content {
   display: none;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
   background: var(--surface);
   padding: 2rem;
   border-radius: 8px;
@@ -109,8 +102,6 @@ body, html {
 
 .tab-content.active {
   display: block;
-  opacity: 1;
-  visibility: visible;
 }
 
 /* Dark mode adjustments */
@@ -243,7 +234,7 @@ body, html {
 
 .project-link {
   display: inline-block;
-  color: var(--accent-color);
+  color: var(--accent);
   text-decoration: none;
   font-weight: 500;
   transition: color 0.3s ease;
@@ -261,28 +252,15 @@ body, html {
   padding: 0.5rem 0;
 }
 
-/* Dark mode adjustments */
+/* Dark mode adjustments - variables already defined in body.theme-dark */
 .theme-dark .project-card {
-  background: var(--dark-card-bg);
-}
-
-.theme-dark .tag {
-  background: var(--dark-accent);
-}
-
-.theme-dark .project-link {
-  color: var(--dark-accent);
-}
-
-.theme-dark .project-link:hover {
-  color: var(--dark-accent-hover);
+  background: var(--card-bg);
 }
 
 /* ========== CERTIFICATES ========== */
-.certificates {
+.tab-content.active.certificates {
   display: grid;
   gap: 2rem;
-  padding: 1rem;
 }
 
 .certificate-card {
@@ -369,7 +347,133 @@ body, html {
 }
 
 /* ========== RESUME ========== */
-.resume h2 { margin-bottom: 1rem; }
+.resume-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid var(--accent);
+}
+
+.resume-header h2 {
+  font-size: 1.8rem;
+  color: var(--text-primary);
+  margin-bottom: 0.25rem;
+}
+
+.resume-title {
+  color: var(--accent);
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 0.4rem;
+}
+
+.resume-contact {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.resume-contact a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.resume-contact a:hover {
+  color: var(--accent);
+}
+
+.resume-entry {
+  margin-bottom: 1.25rem;
+}
+
+.resume-entry-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.2rem;
+}
+
+.resume-entry-header strong {
+  color: var(--text-primary);
+}
+
+.resume-entry-date {
+  color: var(--accent);
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+.resume-entry-org {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin-bottom: 0.4rem;
+}
+
+.resume-section {
+  margin-bottom: 1.75rem;
+}
+
+.resume-section h3 {
+  color: var(--text-primary);
+  font-size: 1.1rem;
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.resume-section h3 i {
+  color: var(--accent);
+}
+
+.resume-section > p {
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+}
+
+.skill-group h4 {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.5rem;
+}
+
+.skill-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.resume-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.resume-list li {
+  color: var(--text-secondary);
+  padding-left: 1rem;
+  position: relative;
+  line-height: 1.5;
+}
+
+.resume-list li::before {
+  content: '▸';
+  color: var(--accent);
+  position: absolute;
+  left: 0;
+}
 
 .resume-download {
   display: flex;
@@ -459,23 +563,10 @@ body, html {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* Dark mode adjustments for main project */
+/* Dark mode adjustments for main project - variables already defined in body.theme-dark */
 .theme-dark .main-project {
-  background: var(--dark-surface);
-  border-color: var(--dark-accent);
-}
-
-.theme-dark .main-project .project-link {
-  background: var(--accent);
+  background: var(--surface);
   border-color: var(--accent);
-}
-
-.theme-dark .main-project .project-link:hover {
-  background: var(--accent-hover);
-  color: white;
-  text-decoration: none;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 /* Dark mode adjustments */
@@ -561,21 +652,61 @@ body, html {
   color: var(--accent);
 }
 
-/* Медиа-запрос для мобильных устройств */
+/* ========== АДАПТИВНОСТЬ ========== */
+@media (max-width: 768px) {
+  .main-project {
+    grid-template-columns: 1fr;
+  }
+
+  .main-project .project-image {
+    height: 220px;
+  }
+}
+
 @media (max-width: 600px) {
   .tab-container {
     padding-bottom: 100px;
   }
-  
+
   .footer {
     height: 90px;
   }
-}
 
-/* Адаптивность для мобильных устройств */
-@media (max-width: 600px) {
   .avatar {
     width: 160px;
     height: 160px;
   }
+
+  .footer-links {
+    gap: 1rem;
+  }
+
+  .footer-links span {
+    display: none;
+  }
 }
+
+/* ========== АНИМАЦИЯ ПОЯВЛЕНИЯ ========== */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.project-card,
+.certificate-card {
+  animation: fadeInUp 0.4s ease both;
+}
+
+.project-card:nth-child(1) { animation-delay: 0.05s; }
+.project-card:nth-child(2) { animation-delay: 0.1s; }
+.project-card:nth-child(3) { animation-delay: 0.15s; }
+.project-card:nth-child(4) { animation-delay: 0.2s; }
+.project-card:nth-child(5) { animation-delay: 0.25s; }
+.certificate-card:nth-child(1) { animation-delay: 0.05s; }
+.certificate-card:nth-child(2) { animation-delay: 0.1s; }
